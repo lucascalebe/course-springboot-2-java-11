@@ -11,22 +11,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 //INFORMAR QUE ESSA CLASSE É UMA TABELA NO BANCO
 @Entity
+//renomeia nome da tabela no banco
 @Table(name = "tb_order")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
+
+	// relacionamento para o JPA colocar a chave estrangeira no banco
 	@ManyToOne
+	// nome da foreign key no banco
 	@JoinColumn(name = "cliente_id")
 	private User client;
-	
+
 	public Order() {
 	}
 
@@ -85,6 +92,5 @@ public class Order implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

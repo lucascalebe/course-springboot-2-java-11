@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//JPA
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+//JPA, informa que é uma tabela do banco
 @Entity
+//renomeia nome da tabela no banco
 @Table(name = "tb_user")
 public class User implements Serializable {
 
@@ -28,6 +31,9 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
+	//Para não dar loop infinito. 
+	@JsonIgnore
+	//relacionamento do JPA para foreign key do banco 
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
